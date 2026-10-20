@@ -78,7 +78,6 @@ Return<RequestStatus> BiometricsFingerprint::setActiveGroup(uint32_t gid,
 }
 
 Return<RequestStatus> BiometricsFingerprint::authenticate(uint64_t operationId, uint32_t gid) {
-    setDimlayerHbm(1);
     return mOplusBiometricsFingerprint->authenticate(operationId, gid);
 }
 
@@ -87,11 +86,13 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t sensorID) {
 }
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t x, uint32_t y, float minor, float major) {
+    setDimlayerHbm(1);
     setFpPress(1);
     return isUff() ? Void() : mOplusBiometricsFingerprint->onFingerDown(x, y, minor, major);
 }
 
 Return<void> BiometricsFingerprint::onFingerUp() {
+    setDimlayerHbm(0);
     setFpPress(0);
     return isUff() ? Void() : mOplusBiometricsFingerprint->onFingerUp();
 }
