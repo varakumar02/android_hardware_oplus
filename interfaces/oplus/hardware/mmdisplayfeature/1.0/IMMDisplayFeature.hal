@@ -1,0 +1,24 @@
+/*
+ * SPDX-FileCopyrightText: 2026 The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+package vendor.oplus.hardware.mmdisplayfeature@1.0;
+
+interface IMMDisplayFeature {
+    /*
+     * Returns whether a post-processing feature is on. The result is
+     * (feature & mFeatures & 0xffff0000) != 0, so it reflects the high-16-bit
+     * feature bit the service tracks internally.
+     */
+    getFeatureOn(uint32_t feature) generates (uint32_t value);
+
+    /*
+     * Enables/disables a post-processing feature and sets its mode. The high 16
+     * bits of feature select the feature (FOSS 0x10000, AD/LTM 0x20000,
+     * SVI 0x40000); the low 16 bits are the enable flag (nonzero = on). value is
+     * the mode (FOSS/AD: 0 off, 1 on, 2..5 preset; SVI/LTM: on/off). Fire and
+     * forget, matching the stock service's oneway transaction.
+     */
+    oneway setFeatureValue(uint32_t feature, int32_t value, bool enable);
+};

@@ -1,0 +1,15 @@
+// Interface reconstructed from the stock vendor.oplus.hardware.mmdisplayfeature@1.0
+// service ABI (verified by decompile); gen_java so DeviceSettings can call it.
+
+hidl_interface {
+    name: "vendor.oplus.hardware.mmdisplayfeature@1.0",
+    root: "vendor.oplus",
+    system_ext_specific: true,
+    srcs: [
+        "IMMDisplayFeature.hal",
+    ],
+    interfaces: [
+        "android.hidl.base@1.0",
+    ],
+    gen_java: true,
+}
