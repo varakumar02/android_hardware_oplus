@@ -19,4 +19,11 @@ allow vendor_diag-router self:capability kill;
 # vendor.qti.diaghal@1.0 once (not in the VINTF manifest, so that fails) and stops.
 get_prop(vendor_diag-router, hwservicemanager_prop)
 hwbinder_use(vendor_diag-router)
+# USB DIAG endpoint (/dev/ffs-diag, mounted by init.qcom.usb.rc). Without it the
+# USB handle of the router stays half set up and a response routed there crashes it.
+allow vendor_diag-router functionfs:dir r_dir_perms;
+allow vendor_diag-router functionfs:file rw_file_perms;
+allowxperm vendor_diag-router functionfs:file ioctl FUNCTIONFS_ENDPOINT_DESC;
+# WLAN (QCA6490) firmware DIAG over MHI, /dev/mhi_*_pipe_4.
+allow vendor_diag-router vendor_mhi_diag_device:chr_file rw_file_perms;
 ')
