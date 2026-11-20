@@ -26,4 +26,8 @@ allow vendor_diag-router functionfs:file rw_file_perms;
 allowxperm vendor_diag-router functionfs:file ioctl FUNCTIONFS_ENDPOINT_DESC;
 # WLAN (QCA6490) firmware DIAG over MHI, /dev/mhi_*_pipe_4.
 allow vendor_diag-router vendor_mhi_diag_device:chr_file rw_file_perms;
+# Vendor libdiag clients (rild, sensors, IMS, audio, netmgrd, cnd...) log through
+# the router socket now that the kernel /dev/diag is gone. Same set Qualcomm
+# allows, minus app domains.
+allow { domain -coredomain -appdomain -hal_configstore -vendor_init } vendor_diag-router:unix_stream_socket connectto;
 ')
