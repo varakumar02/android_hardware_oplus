@@ -14,4 +14,9 @@ allow vendor_diag-router self:qipcrtr_socket create_socket_perms_no_ioctl;
 allow vendor_diag-router self:netlink_kobject_uevent_socket create_socket_perms_no_ioctl;
 # Ends logging sessions of clients that went away.
 allow vendor_diag-router self:capability kill;
+# Its HIDL thread waits for hwservicemanager through this property and polls it
+# every second while the read is denied; once readable it tries to register
+# vendor.qti.diaghal@1.0 once (not in the VINTF manifest, so that fails) and stops.
+get_prop(vendor_diag-router, hwservicemanager_prop)
+hwbinder_use(vendor_diag-router)
 ')
