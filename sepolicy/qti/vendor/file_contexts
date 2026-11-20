@@ -217,3 +217,4 @@
 /dev/sec_dev                          u:object_r:wlchg_device:s0
 /dev/wlchg                            u:object_r:wlchg_device:s0
 /dev/wls_dev                          u:object_r:wlchg_device:s0
+/vendor/bin/diag-router         u:object_r:vendor_diag-router_exec:s0

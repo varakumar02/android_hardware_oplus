@@ -1,0 +1,17 @@
+# Qualcomm diag-router (/vendor/bin/diag-router, stock vendor blob, started by
+# /vendor/etc/init/vendor.qti.diag.rc). Qualcomm only ships its policy for
+# userdebug/eng (device/qcom/sepolicy_vndr/legacy-um/generic/vendor/test), so a
+# user build has no domain for it and init refuses to start it. Same type names
+# as Qualcomm's, declared only on user builds so the two never collide.
+ifelse(target_build_variant, `user', `
+type vendor_diag-router, domain;
+type vendor_diag-router_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_diag-router)
+
+# Peripheral DIAG channels (modem, ADSP, SLPI, CDSP) are QRTR services.
+allow vendor_diag-router self:qipcrtr_socket create_socket_perms_no_ioctl;
+# Peripheral up/down notifications.
+allow vendor_diag-router self:netlink_kobject_uevent_socket create_socket_perms_no_ioctl;
+# Ends logging sessions of clients that went away.
+allow vendor_diag-router self:capability kill;
+')
