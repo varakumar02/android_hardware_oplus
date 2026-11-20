@@ -2,7 +2,7 @@
 # /vendor/etc/init/vendor.qti.diag.rc). Qualcomm only ships its policy for
 # userdebug/eng (device/qcom/sepolicy_vndr/legacy-um/generic/vendor/test), so a
 # user build has no domain for it and init refuses to start it. Same type names
-# as Qualcomm's, declared only on user builds so the two never collide.
+# as Qualcomm uses, declared only on user builds so the two never collide.
 ifelse(target_build_variant, `user', `
 type vendor_diag-router, domain;
 type vendor_diag-router_exec, exec_type, vendor_file_type, file_type;
@@ -20,7 +20,7 @@ allow vendor_diag-router self:capability kill;
 get_prop(vendor_diag-router, hwservicemanager_prop)
 hwbinder_use(vendor_diag-router)
 # USB DIAG endpoint (/dev/ffs-diag, mounted by init.qcom.usb.rc). Without it the
-# router's USB handle stays half set up and a response routed there crashes it.
+# USB handle of the router stays half set up and a response routed there crashes it.
 allow vendor_diag-router functionfs:dir r_dir_perms;
 allow vendor_diag-router functionfs:file rw_file_perms;
 allowxperm vendor_diag-router functionfs:file ioctl FUNCTIONFS_ENDPOINT_DESC;
